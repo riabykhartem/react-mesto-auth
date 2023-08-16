@@ -2,6 +2,8 @@
 class Api  {
   constructor(options) {
     this._headers = options.headers;
+    this._auth = options.headers.authorization
+    console.log(this._headers);
     this._url = options.url;
   }
   _getResponseData(res) {
@@ -81,10 +83,10 @@ class Api  {
     }).then(this._getResponseData);
   }
 }
-const token = localStorage.getItem('token')
+
 const api = new Api({
   headers: {
-    authorization: token,
+    "authorization": localStorage.getItem('token'),
     "Content-Type": "application/json",
   },
   url: "https://mesto.nomoreparties.co/v1/cohort-69",

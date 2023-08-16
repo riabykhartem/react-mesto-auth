@@ -35,12 +35,11 @@ function App() {
     if(!token){
       return
     }
-    auth.getContent(token).then((res)=> {
-      console.log(res.data._id)
-      setCurrentUser({...currentUser, _id: res.data._id})
-      console.log(currentUser)
-    })
-    .catch(err => console.error(`ошибка при получении данных пользователя: ${err}`))
+    api.getUserInfo()
+
+    .catch((err) => {
+      console.error(`ошибка при получении данных пользователя: ${err}`)}
+      )
   }
 
   useEffect(()=>{
@@ -135,7 +134,6 @@ function App() {
 
   function handleSingUp(credentials){
     auth.register(credentials)
-    .then((res) => console.log(res))
     .then(()=>{
       setIsSignedup(true)
       setisInfoTooltipPopupOpened(true)
