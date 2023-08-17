@@ -235,7 +235,7 @@ function App() {
           onCardClick={handleCardClick}
           onClose={closeAllPopups}
         />
-        <InfoTooltip isSignedup={isSignedup} isOpened={isInfoTooltipPopupOpened} onClose={closeAllPopups}>
+        <InfoTooltip isOpened={isInfoTooltipPopupOpened} onClose={closeAllPopups}>
                {isSignedup ? 
                     <figure className="info-tooltip__container">
                         <img src={success} alt="Галочка" className="info-tooltip__image"/>

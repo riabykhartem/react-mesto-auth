@@ -10,7 +10,7 @@ export default function EditProfilePopup(props) {
     useEffect(()=>{
         setName(currentUser.name)
         setDescription(currentUser.about)
-    }, [currentUser])
+    }, [currentUser, props.isOpened])
     
     function handleSubmit(e) {
         // Запрещаем браузеру переходить по адресу формы

@@ -1,6 +1,6 @@
 import React from "react";
 
-const InfoTooltip = ({isSignedup, isOpened, onClose, children}) =>{
+const InfoTooltip = ({isOpened, onClose, children}) =>{
     return(
         <div className={`popup ${isOpened && 'popup_opened'}`}>
             <div className="popup__container">
