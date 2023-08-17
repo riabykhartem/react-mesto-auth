@@ -1,13 +1,24 @@
+import { NavLink } from "react-router-dom";
 import Card from "../card/Card.jsx";
 import React from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
+import Header from "../header/Header.jsx";
+
 
 export default function Main(props) {
   const initialCards = props.initialCards;
 
   const currentUser = React.useContext(CurrentUserContext);
   
+  
   return (
+    <>
+    <Header>
+      <div className="header__container">
+        <p className="header__email">{props.email}</p>
+        <NavLink to="/sign-in" className="link link_place_log-out" onClick={props.onLogOut}>выйти</NavLink>
+      </div>
+    </Header>
     <main>
       <section className="profile section">
         <div className="profile__container">
@@ -61,5 +72,6 @@ export default function Main(props) {
         </ul>
       </section>
     </main>
+    </>
   );
 }

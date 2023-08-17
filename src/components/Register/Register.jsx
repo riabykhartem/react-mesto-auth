@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import Header from "../header/Header";
 
 const Register = (props) => {
@@ -14,7 +15,7 @@ const Register = (props) => {
   return (
     <>
       <Header>
-        <p style={{ color: "white" }}>Войти</p>
+        <NavLink to="/sign-in" className="link">Войти</NavLink>
       </Header>
       <form className="login-form" onSubmit={handleSubmit}>
         <h1 className="login-form_header">Регистрация</h1>
@@ -40,7 +41,7 @@ const Register = (props) => {
           <button type="submit" className="login-form_submit-button">
             Зарегистрироваться
           </button>
-          <span>Тут должен быть путь к логину</span>
+          <NavLink to="/sign-in" className="link">Уже зарегистрированы? Войти</NavLink>
         </div>
       </form>
     </>
