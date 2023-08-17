@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Header from "../header/Header";
-import InfoTooltip from "../infoTooltip/InfoTooltip";
 
 const Login = (props) => {
   const [email, setEmail] = useState('');
@@ -14,7 +13,6 @@ const Login = (props) => {
 
   return (
     <>
-      <InfoTooltip />
       <Header>
         <NavLink to="/sign-up" className="link">Регистрация</NavLink>
       </Header>
