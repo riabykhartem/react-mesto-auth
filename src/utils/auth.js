@@ -1,7 +1,5 @@
 class Auth{
     constructor(props){
-        this._headers = props.headers;
-        this._authorization = props.headers.authorization;
         this._baseUrl = props.baseUrl;
     }
 
@@ -12,7 +10,9 @@ class Auth{
     register(data){
         return fetch(`${this._baseUrl}/signup`, {
             method: 'POST',
-            headers: this._headers,
+            headers:{
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
                 password: data.password,
                 email: data.email
@@ -20,10 +20,13 @@ class Auth{
         }).then(this._getResponseData)
     }
 
-    login(data){
+    login(data, token){
         return fetch(`${this._baseUrl}/signin`, {
             method: 'POST',
-            headers: this._headers,
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+            },
             body: JSON.stringify({
                 password: data.password,
                 email: data.email
@@ -43,11 +46,7 @@ class Auth{
     }
 }
 const auth = new Auth({
-    headers: {
-        Accept: 'application/json',
-        "Content-Type": "application/json"
-    },
-    baseUrl: "https://auth.nomoreparties.co",
+    baseUrl: "http://api.mesto.riabykh.nomoredomainsrocks.ru",
   });
 
 export default auth

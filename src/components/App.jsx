@@ -35,14 +35,14 @@ function App() {
   
   useEffect(()=>{
     tokenCheck()
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
+    Promise.all([api.getUserInfo(token), api.getInitialCards(token)])
     .then(([userData, cardsData])=>{
       setCurrentUser({name: userData.name, about: userData.about, avatar: userData.avatar, _id:userData._id})
       setInitialCards(cardsData)
-    }).catch(()=>{
-      return
+    }).catch((err)=>{
+      console.log('проблема с получением информации о пользователе и карточек');
     })
-  },[])
+  },[token])
 
   function tokenCheck(){
     if(!token){
@@ -50,15 +50,12 @@ function App() {
     }
     auth.getContent(token)
     .then(res =>{
-      setEmail(res.data.email)
+      setEmail(res.email)
     setloggedIn(true)})
     .catch((err) => {
       console.error(`ошибка при получении данных пользователя: ${err}`)}
       )
   }
-
-
-  
 
   const navigate = useNavigate()
 
@@ -81,7 +78,7 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     
     api
-      .changeLikeCardStatus(card._id, isLiked)
+      .changeLikeCardStatus(card._id, isLiked, token)
       .then((newCard) => {
         setInitialCards((initialCards) =>
           initialCards.map((c) => (c._id === card._id ? newCard : c))
@@ -92,7 +89,7 @@ function App() {
 
   function handleCardDelete(deletedCardId) {
     api
-      .deleteCard(deletedCardId)
+      .deleteCard(deletedCardId, token)
       .then(
         setInitialCards(
           initialCards.filter((card) => {
@@ -116,7 +113,7 @@ function App() {
 
   function handleUpdateUser(newUserData) {
     api
-      .setUserInfo({ name: newUserData.name, about: newUserData.about })
+      .setUserInfo({ name: newUserData.name, about: newUserData.about }, token)
       .then((res) =>
         setCurrentUser({
           name: res.name,
@@ -132,14 +129,14 @@ function App() {
 
   function handleUpdateAvatar(newAvatar) {
     api
-      .setAvatar(newAvatar)
+      .setAvatar(newAvatar, token)
       .then((res) => setCurrentUser({ ...currentUser, avatar: res.avatar }))
       .catch((err) => console.error(`ошибка при обновлении автара: ${err}`));
   }
 
   function handleAddPlaceSubmit(newCard) {
     api
-      .addCard(newCard)
+      .addCard(newCard, token)
       .then((dataCard) => setInitialCards([dataCard, ...initialCards]))
       .then(closeAllPopups())
       .catch((err) => `ошибка при добавлении новой карточки: ${err}`);
@@ -164,7 +161,7 @@ function App() {
       setToken(res.token)
       localStorage.setItem('token', res.token)
       navigate('/',{replace:true})
-    }).catch(err=>console.error(`Ошибка при логине: ${err}`))
+    }).catch(()=>setisInfoTooltipPopupOpened(true))
   }
 
   function logOut(){
@@ -236,7 +233,7 @@ function App() {
           onClose={closeAllPopups}
         />
         <InfoTooltip isOpened={isInfoTooltipPopupOpened} onClose={closeAllPopups}>
-               {isSignedup ? 
+               {isSignedup || loggedIn ? 
                     <figure className="info-tooltip__container">
                         <img src={success} alt="Галочка" className="info-tooltip__image"/>
                         <figcaption className="info-tooltip__caption">Вы успешно зарегистрировались!</figcaption>
