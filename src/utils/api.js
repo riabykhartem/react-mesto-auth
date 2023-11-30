@@ -13,9 +13,6 @@ class Api  {
         "Authorization": `Bearer ${token}`,
       },
     }).then(this._getResponseData)
-    .catch((err) =>{
-      console.log(err);
-    });
   }
 
   getInitialCards(token) {
@@ -24,9 +21,6 @@ class Api  {
         "Authorization": `Bearer ${token}`,
       },
     }).then(this._getResponseData)
-    .catch((err) =>{
-      console.log(err);
-    });
   }
 
   setUserInfo(data, token) {
@@ -53,7 +47,7 @@ class Api  {
       body: JSON.stringify({
         avatar: data.avatar,
       }),
-    }).then(this._getResponseData);
+    }).then(this._getResponseData)
   }
 
   addCard(data, token) {
@@ -81,7 +75,7 @@ class Api  {
   }
 
   deleteLike(cardId, token) {
-    return fetch(`${this._url}/cards/${cardId}/likes`, {
+  return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -98,7 +92,7 @@ class Api  {
   }
 
   deleteCard(cardId, token) {
-    return fetch(`${this._url}/cards/${cardId}`, {
+  return fetch(`${this._url}/cards/${cardId}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -108,7 +102,7 @@ class Api  {
 }
 
 const api = new Api({
-  url:  "https://api.mesto.riabykh.nomoredomainsrocks.ru",
+  url: "http://localhost:3000",
 });
-
+//https://api.mesto.riabykh.nomoredomainsrocks.ru
 export default api;
